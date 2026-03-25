@@ -3,16 +3,18 @@
 Quick reference for every device and service on the network.
 Update this file any time a static IP changes.
 
-## Reserved Static Range: 192.168.1.10 to 192.168.1.60
+## Reserved Static Range: 192.168.1.10 to 192.168.1.49
 
-AT&T router DHCP pool starts at 192.168.1.61. No overlap possible.
+Pi-hole DHCP pool runs from 192.168.1.50 to 192.168.1.200 (confirmed from Pi-hole settings).
+Static assignments must stay at 192.168.1.49 or below to avoid conflicts.
+AT&T router gateway is 192.168.1.254. AT&T router DHCP is DISABLED.
 
 ## Infrastructure
 
 | Device | IP | Notes |
 |---|---|---|
 | Proxmox Host | 192.168.1.10 | Dashboard: https://192.168.1.10:8006 |
-| AT&T Router | 192.168.1.254 | WAN gateway |
+| AT&T Router | 192.168.1.254 | WAN gateway — DHCP disabled |
 
 ## Containers
 
@@ -28,6 +30,8 @@ AT&T router DHCP pool starts at 192.168.1.61. No overlap possible.
 | InfluxDB | CT 107 | 192.168.1.18 | http://192.168.1.18:8086 |
 | Grafana | CT 108 | 192.168.1.19 | http://192.168.1.19:3000 |
 
+All static IPs (192.168.1.10–.19) sit safely below the Pi-hole DHCP pool start of 192.168.1.50.
+
 ## Port Forwarding
 
 | External | Internal | Service |
@@ -36,3 +40,12 @@ AT&T router DHCP pool starts at 192.168.1.61. No overlap possible.
 | 443 | 192.168.1.17:443 | NPM HTTPS |
 
 Nothing else is forwarded externally. All traffic enters through NPM only.
+
+## Pi-hole DHCP Settings (confirmed)
+
+- DHCP Enabled: Yes
+- - Range Start: 192.168.1.50
+  - - Range End: 192.168.1.200
+    - - Gateway: 192.168.1.254
+      - - Pi-hole current IP (pre-migration): 192.168.1.232
+        - - Pi-hole target IP (post-migration): 192.168.1.11
