@@ -191,3 +191,31 @@ If an IP migration breaks something:
 3. If Pi-hole is unreachable, go to Proxmox console at 192.168.1.10 directly
 4. Run `pct restart 100`
 5. Confirm household DNS is working before continuing
+
+
+---
+
+## Confirmed Network Settings (Verified March 25 2026)
+
+These values were confirmed directly from the Pi-hole admin panel and AT&T router.
+
+### Pi-hole DHCP (Confirmed)
+
+| Setting | Value |
+|---|---|
+| DHCP Enabled | Yes |
+| Range Start | 192.168.1.50 |
+| Range End | 192.168.1.200 |
+| Gateway | 192.168.1.254 |
+| AT&T Router DHCP | Disabled |
+
+**Important:** The DHCP pool starts at 192.168.1.50. All static container assignments (192.168.1.10–.19) sit safely below this range with a buffer of 30 addresses. No IP conflicts possible.
+
+### Pre-Migration IPs (Before Phase 1)
+
+| Device | IP Before Migration | IP After Migration |
+|---|---|---|
+| Proxmox Host | 192.168.1.231 | 192.168.1.10 |
+| Pi-hole CT 100 | 192.168.1.232 | 192.168.1.11 |
+| Tailscale CT 101 | TBD | 192.168.1.12 |
+| Jellyfin CT 102 | TBD | 192.168.1.13 |
